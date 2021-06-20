@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using NetCoreLocalization.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace NetCoreLocalization
@@ -29,11 +32,12 @@ namespace NetCoreLocalization
             services.AddControllersWithViews();
             services.AddLocalization(options =>
             {
-                // Resource (kaynak) dosyalarımızı ana dizin altında “Resources” klasorü içerisinde tutacağımızı belirtiyoruz.
+                // Resource (kaynak) dosyalarÃ½mÃ½zÃ½ ana dizin altÃ½nda â€œResourcesâ€ klasorÃ¼ iÃ§erisinde tutacaÃ°Ã½mÃ½zÃ½ belirtiyoruz.
                 options.ResourcesPath = "Resources";
             });
 
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,20 +54,6 @@ namespace NetCoreLocalization
                 app.UseHsts();
             }
 
-            var supportedCultures = new List<CultureInfo>
-            {
-            new CultureInfo("tr-TR"),
-            new CultureInfo("en-US"),
-            };
-            
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures,
-                DefaultRequestCulture = new RequestCulture("tr-TR")
-            });
-
-
             app.UseHttpsRedirection();
             
             app.UseStaticFiles();
@@ -71,6 +61,20 @@ namespace NetCoreLocalization
             app.UseRouting();
 
             app.UseAuthorization();
+
+            var supportedCultures = new List<CultureInfo>
+            {
+            new CultureInfo("tr-TR"),
+            new CultureInfo("en-US"),
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures,
+                DefaultRequestCulture = new RequestCulture("tr-TR")
+            });
+
 
             app.UseEndpoints(endpoints =>
             {

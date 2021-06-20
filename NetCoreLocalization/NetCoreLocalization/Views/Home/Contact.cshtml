@@ -6,24 +6,19 @@
 
     <h3>@Localizer["Merhaba"]</h3>
 </div>
-<form class="form-horizontal" method="post" action="Kaydet">
-    <div class="form-group">
-        <label class="col-sm-2 control-label" asp-for="AdSoyad"></label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" asp-for="AdSoyad">
-            <span asp-validation-for="AdSoyad"></span>
+<form asp-action="Kaydet">
+    <div>
+        <div class="form-group">
+            <label asp-for="AdSoyad" class="control-label"></label>
+            <input asp-for="AdSoyad" class="form-control" />
+            <span asp-validation-for="AdSoyad" class="text-danger"></span>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" asp-for="Mesaj"></label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" asp-for="Mesaj">
-            <span asp-validation-for="Mesaj"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">@Localizer["Kaydet"]</button>
+        <div class="form-group">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </div>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

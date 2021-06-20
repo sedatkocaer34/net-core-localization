@@ -38,7 +38,9 @@ namespace NetCoreLocalization.Controllers
         [HttpPost]
         public IActionResult Kaydet(ContactFormViewModel viewModel)
         {
+            
             return View("Contact", viewModel);
+
         }
 
         public IActionResult Privacy()
