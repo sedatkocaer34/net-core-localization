@@ -15,10 +15,13 @@ namespace NetCoreLocalization.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(ILogger<HomeController> logger , IStringLocalizer<HomeController> localizer)
+        private readonly IStringLocalizer<SharedResources> _localizerModel;
+
+        public HomeController(ILogger<HomeController> logger , IStringLocalizer<HomeController> localizer, IStringLocalizer<SharedResources> localizerModel)
         {
             _logger = logger;
             _localizer = localizer;
+            _localizerModel = localizerModel;
         }
 
         public IActionResult Index()
@@ -30,6 +33,12 @@ namespace NetCoreLocalization.Controllers
         {
             ViewData["Message"] = _localizer.GetString("Message");
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Kaydet(ContactFormViewModel viewModel)
+        {
+            return View("Contact", viewModel);
         }
 
         public IActionResult Privacy()
